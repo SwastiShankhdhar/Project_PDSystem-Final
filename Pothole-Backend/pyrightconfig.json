@@ -1,0 +1,14 @@
+{
+  "venvPath": ".",
+  "venv": "vpothole",
+  "pythonVersion": "3.10",
+  "extraPaths": ["."],
+  "include": [
+    "detection",
+    "geolocation",
+    "reporting",
+    "pothole_backend"
+  ],
+  "reportMissingImports": "warning",
+  "reportMissingModuleSource": "warning"
+}

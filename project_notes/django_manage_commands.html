@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Django manage.py commands</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.1);
+    --border-hover: rgba(0,0,0,0.2);
+    --text-primary: #1a1a18;
+    --text-secondary: #5f5e5a;
+    --text-tertiary: #9b9a95;
+    --mono: 'JetBrains Mono', 'Fira Mono', 'Cascadia Code', monospace;
+    --sans: 'DM Sans', system-ui, sans-serif;
+
+    --db-bg: #e6f1fb; --db-text: #0c447c;
+    --test-bg: #eaf3de; --test-text: #27500a;
+    --dev-bg: #faeeda; --dev-text: #633806;
+    --drf-bg: #eeedfe; --drf-text: #3c3489;
+    --admin-bg: #f1efe8; --admin-text: #444441;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413;
+      --surface: #1e1e1c;
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --text-primary: #e8e7e2;
+      --text-secondary: #9b9a95;
+      --text-tertiary: #5f5e5a;
+
+      --db-bg: #0c2d4a; --db-text: #85b7eb;
+      --test-bg: #173404; --test-text: #c0dd97;
+      --dev-bg: #412402; --dev-text: #fac775;
+      --drf-bg: #26215c; --drf-text: #cecbf6;
+      --admin-bg: #2c2c2a; --admin-text: #b4b2a9;
+    }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    padding: 2.5rem 1.5rem;
+    min-height: 100vh;
+  }
+
+  .page { max-width: 680px; margin: 0 auto; }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-bottom: 2rem;
+  }
+
+  .section { margin-bottom: 1.75rem; }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+
+  .cmd-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: border-color 0.15s;
+    text-decoration: none;
+  }
+
+  .cmd-card:hover { border-color: var(--border-hover); }
+
+  .cmd-text { flex: 1; min-width: 0; }
+
+  .cmd-name {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cmd-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .b-db    { background: var(--db-bg);    color: var(--db-text); }
+  .b-test  { background: var(--test-bg);  color: var(--test-text); }
+  .b-dev   { background: var(--dev-bg);   color: var(--dev-text); }
+  .b-drf   { background: var(--drf-bg);   color: var(--drf-text); }
+  .b-admin { background: var(--admin-bg); color: var(--admin-text); }
+
+  code {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    background: var(--admin-bg);
+    color: var(--text-secondary);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>python manage.py commands</h1>
+  <p class="subtitle">Django + PostgreSQL + DRF + ML — full reference</p>
+
+  <div class="section">
+    <p class="section-label">Database</p>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py makemigrations</p>
+        <p class="cmd-desc">Detects changes in your models and generates migration files. Run after every model change.</p>
+      </div>
+      <span class="badge b-db">database</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py migrate</p>
+        <p class="cmd-desc">Applies pending migrations to PostgreSQL — actually creates/alters tables on the DB.</p>
+      </div>
+      <span class="badge b-db">database</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py showmigrations</p>
+        <p class="cmd-desc">Lists all migrations and whether they have been applied [X] or not [ ].</p>
+      </div>
+      <span class="badge b-db">database</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py sqlmigrate &lt;app&gt; &lt;migration&gt;</p>
+        <p class="cmd-desc">Prints the raw SQL that a migration will execute — great for checking before applying.</p>
+      </div>
+      <span class="badge b-db">database</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py dbshell</p>
+        <p class="cmd-desc">Opens a live psql terminal connected to your PostgreSQL database.</p>
+      </div>
+      <span class="badge b-db">database</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py inspectdb</p>
+        <p class="cmd-desc">Reverse-engineers your existing DB tables into Django model code.</p>
+      </div>
+      <span class="badge b-db">database</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py flush</p>
+        <p class="cmd-desc">Wipes all data from the DB tables but keeps the table structure intact.</p>
+      </div>
+      <span class="badge b-db">database</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Testing</p>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py test</p>
+        <p class="cmd-desc">Runs the full test suite — creates a temporary test DB, runs all tests, destroys it.</p>
+      </div>
+      <span class="badge b-test">test</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py test &lt;app&gt;</p>
+        <p class="cmd-desc">Runs tests only for a specific app — e.g. <code>test detection</code> for your ML app.</p>
+      </div>
+      <span class="badge b-test">test</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py test &lt;app&gt;.tests.&lt;Class&gt;.&lt;method&gt;</p>
+        <p class="cmd-desc">Pinpoints a single test method — useful for debugging one failing case.</p>
+      </div>
+      <span class="badge b-test">test</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py test --verbosity 2</p>
+        <p class="cmd-desc">Shows each test name as it runs instead of just dots — much easier to debug.</p>
+      </div>
+      <span class="badge b-test">test</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py test --keepdb</p>
+        <p class="cmd-desc">Reuses the test DB between runs — faster, especially with PostgreSQL migrations.</p>
+      </div>
+      <span class="badge b-test">test</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">DRF & API</p>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py generateschema</p>
+        <p class="cmd-desc">Generates an OpenAPI schema file for your DRF API endpoints.</p>
+      </div>
+      <span class="badge b-drf">DRF</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py shell</p>
+        <p class="cmd-desc">Interactive Python shell with all your Django models, serializers, and settings pre-loaded.</p>
+      </div>
+      <span class="badge b-drf">DRF</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Development</p>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py runserver</p>
+        <p class="cmd-desc">Starts the dev server at localhost:8000. Add <code>0.0.0.0:8000</code> to expose on network.</p>
+      </div>
+      <span class="badge b-dev">dev</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py startapp &lt;name&gt;</p>
+        <p class="cmd-desc">Creates a new app folder with models, views, tests, etc. pre-scaffolded.</p>
+      </div>
+      <span class="badge b-dev">dev</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py check</p>
+        <p class="cmd-desc">Validates your entire project for config errors, missing migrations, model issues — without running the server.</p>
+      </div>
+      <span class="badge b-dev">dev</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py check --deploy</p>
+        <p class="cmd-desc">Runs extra security checks for production readiness — DEBUG off, secret keys, HTTPS, etc.</p>
+      </div>
+      <span class="badge b-dev">dev</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py collectstatic</p>
+        <p class="cmd-desc">Gathers all static files into STATIC_ROOT for serving in production.</p>
+      </div>
+      <span class="badge b-dev">dev</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">Admin & data</p>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py createsuperuser</p>
+        <p class="cmd-desc">Creates an admin user to log into the Django admin panel at /admin.</p>
+      </div>
+      <span class="badge b-admin">admin</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py changepassword &lt;username&gt;</p>
+        <p class="cmd-desc">Resets a user's password directly from the terminal.</p>
+      </div>
+      <span class="badge b-admin">admin</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py dumpdata &gt; backup.json</p>
+        <p class="cmd-desc">Exports all DB data to JSON. Use <code>loaddata backup.json</code> to import it back.</p>
+      </div>
+      <span class="badge b-admin">admin</span>
+    </div>
+
+    <div class="cmd-card">
+      <div class="cmd-text">
+        <p class="cmd-name">python manage.py help</p>
+        <p class="cmd-desc">Prints every available command including any custom ones you've written.</p>
+      </div>
+      <span class="badge b-admin">admin</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
