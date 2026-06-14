@@ -115,4 +115,20 @@ Coordinates from GET /api/detection/locations/ are plotted on a Leaflet.js map a
 - Detection timestamp
 
 The map uses OpenStreetMap tiles — free, no API key, works offline with local tile caching.
+
 <img width="492" height="668" alt="image" src="https://github.com/user-attachments/assets/fba00318-0ca1-4973-bad8-186a9faf3f7c" />
+
+_______________________________________________________________________________________
+
+## DATABASE
+
+Three application tables in PostgreSQL. Everything else is Django's own system tables — ignore those.
+
+<img width="641" height="427" alt="image" src="https://github.com/user-attachments/assets/f636396b-e9e0-474f-a285-45529631bab5" />
+
+<img width="638" height="326" alt="image" src="https://github.com/user-attachments/assets/9a3a67f8-8a3c-40c2-896c-15ced257ed41" />
+
+<img width="615" height="246" alt="image" src="https://github.com/user-attachments/assets/d897515c-d5af-4086-8910-6a28f37e3558" />
+
+<img width="1884" height="886" alt="Screenshot 2026-04-07 230547" src="https://github.com/user-attachments/assets/1dfd92e0-ce20-4cd3-a884-f460fb02f975" />
+
